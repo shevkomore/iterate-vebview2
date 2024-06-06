@@ -1,4 +1,6 @@
-﻿using iterate.ui;
+﻿using iterate.file;
+using iterate.ui;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,14 @@ namespace iterate
             this.context = context;
             InitializeComponent();
             webView21.WebMessageReceived += WebView21_WebMessageReceived;
+            context.UIEventBus.Notification.DataUpdated += (s, e) => context.UIEventBus.Notification.SendToView(webView21);
+            context.UIEventBus.Notification.SendToView(webView21);
+        }
+
+        public void SendVersionListLatest(List<iterate.file.Version> versions)
+        {
+            var message = new iterate.ui.message.Command<List<iterate.file.Version>>() {data = versions };
+            webView21.ExecuteScriptAsync($"window.receiveFromWinForms('versions',{JsonConvert.SerializeObject(message)}");
         }
 
         private void WebView21_WebMessageReceived(object sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs e)

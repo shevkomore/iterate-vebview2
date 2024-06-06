@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.webView21)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,6 +45,10 @@
             this.webView21.Source = new System.Uri("http://localhost:3000/start", System.UriKind.Absolute);
             this.webView21.TabIndex = 0;
             this.webView21.ZoomFactor = 1D;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // ProjectSelectForm
             // 
@@ -61,5 +66,6 @@
         #endregion
 
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

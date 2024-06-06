@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iterate", "iterate.csproj", "{8CAEBB8A-7838-48A4-9BC7-1A14AA482BAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iterateWebServer", "..\iterateWebServer\iterateWebServer.csproj", "{2A6732B3-85A5-4CFC-AD07-A70F3B725906}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8CAEBB8A-7838-48A4-9BC7-1A14AA482BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CAEBB8A-7838-48A4-9BC7-1A14AA482BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CAEBB8A-7838-48A4-9BC7-1A14AA482BAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A6732B3-85A5-4CFC-AD07-A70F3B725906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A6732B3-85A5-4CFC-AD07-A70F3B725906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A6732B3-85A5-4CFC-AD07-A70F3B725906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A6732B3-85A5-4CFC-AD07-A70F3B725906}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
