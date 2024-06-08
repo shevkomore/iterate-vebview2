@@ -2,8 +2,10 @@
 using iterate.ui.data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,25 +13,36 @@ namespace iterate
 {
     public class IterateApplicationContext: ApplicationContext
     {
+        public readonly string HOME_PATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "iterate");
+
         public UIEventBus UIEventBus;
+        public ProjectManager projectManager;
 
         SidePanelOpenButton sidePanelOpenButton;
         SidePanel sidePanel;
         ProjectSelectForm projectSelectForm;
 
-        Observation repository;
+        //IN TESTING
+
+        FileObserver observer;
         public IterateApplicationContext() 
         {
-            UIEventBus = new UIEventBus();
+            Directory.CreateDirectory(HOME_PATH);
+            projectManager = new ProjectManager(this);
 
-            projectSelectForm = new ProjectSelectForm();
+            UIEventBus = new UIEventBus(projectManager);
+
+            projectSelectForm = new ProjectSelectForm(this);
             DialogResult selection = projectSelectForm.ShowDialog();
             if (selection != DialogResult.OK)
             {
                 Application.Exit();
+                Environment.Exit(0);
+                return;
             }
-            repository = new Observation(projectSelectForm.path);
-            repository.watcher.Changed += onRepoChanged;
+            projectManager.SelectProject(projectSelectForm.id);
+            observer = new FileObserver(this,projectManager.CurrentProject.Path);
+            observer.watcher.Changed += onRepoChanged;
             StartTrackMode();
         }
 

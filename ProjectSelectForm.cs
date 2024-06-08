@@ -15,11 +15,15 @@ namespace iterate
     public partial class ProjectSelectForm : Form
     {
         public string command;
-        public string path;
-        public ProjectSelectForm()
+        public string id;
+        public IterateApplicationContext context;
+        public ProjectSelectForm(IterateApplicationContext context)
         {
+            this.context = context;
             InitializeComponent();
             webView21.WebMessageReceived += WebView21_WebMessageReceived;
+            context.UIEventBus.Projects.DataUpdated += (s,e) => context.UIEventBus.Projects.SendToView(webView21);
+            context.UIEventBus.Projects.SendToViewWhenInitialized(webView21);
         }
 
         private void WebView21_WebMessageReceived(object sender, Microsoft.Web.WebView2.Core.CoreWebView2WebMessageReceivedEventArgs e)
@@ -31,7 +35,7 @@ namespace iterate
                 if (command == "open-repo")
                 {
                     this.command = command;
-                    this.path = data["path"].Value<string>();
+                    this.id = data["data"].Value<string>();
                     DialogResult = DialogResult.OK;
                     this.Close();
                     return;
@@ -42,7 +46,7 @@ namespace iterate
                     DialogResult res = openFileDialog1.ShowDialog(this);
                     if (res == DialogResult.OK)
                     {
-                        this.path = openFileDialog1.FileName;
+                        this.id = context.projectManager.AddFilePath(openFileDialog1.FileName);
                         DialogResult = DialogResult.OK;
                     }
                     else return;

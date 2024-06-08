@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace iterate.file
 {
-    public class Observation
+    public class FileObserver
     {
         public string path;
         public bool active = true;
         public FileSystemWatcher watcher;
-        public Observation(string path) {
+        private IterateApplicationContext context;
+        public FileObserver(IterateApplicationContext context, string path) {
             this.path = path;
+            this.context = context;
             if (!File.Exists(path))
             {
                 active = false;
@@ -32,7 +34,9 @@ namespace iterate.file
 
         private void onRenamed(object sender, RenamedEventArgs e)
         {
+            path = e.FullPath;
             watcher.Filter = e.Name;
+            context.projectManager.UpdateFilePath(context.projectManager.CurrentProject.Id, path);
         }
     }
 }
